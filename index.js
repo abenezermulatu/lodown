@@ -304,12 +304,16 @@ module.exports.partition = partition;
  */
  
  function map (collection, func) {
- let newArr = [];
-    each(collection, function(thing, i, array) {
-      newArr.push(func(thing, i, array));  
-    });
-    return newArr;
+let newArray = [];
+ for(let i = 0; i < collection.length; i++){
+  if(func(collection[i],[i],collection) === true){
+   newArray.push(collection[i]);
+  }
+ }for (let key in collection ){
+  newArray.push(func(collection[key], [key], collection));
+ }return newArray;
 }
+
 module.exports.map = map;
 /**
  * 
@@ -323,11 +327,9 @@ module.exports.map = map;
  */
  
 function pluck (array, property){
-    let names = array.map(function(item, index, array){
-        return item['name'];
+   return map(array, function(obj) {
+        return obj[property];
     });
-
-    return names;
 }
 module.exports.pluck = pluck;
 
