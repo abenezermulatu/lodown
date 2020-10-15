@@ -396,22 +396,19 @@ module.exports.some = some;
  
 function reduce (array, callBackFunction, initialValue) {
     //chek if initialValue is defined
-    if (initialValue !== undefined) {
-        var result = initialValue;
-        each(array, function(element, index, array) {
-            result = callBackFunction(result, element, index, array);
-        });
-        return result;
-        }
-        else {
-            result = array[0];
-            each(array, function(element, index, arrays) {
-                if (index !== 0) {
-                    result = callBackFunction(result, element, index, array);
-                }
-            });
-            return result;
-        }
+   let accumulatedValue = initialValue || initialValue === undefined;
+    
+    for(let i = 0; i < array.length; i++) {
+     
+        accumulatedValue = callBackFunction(
+            accumulatedValue,
+            array[i],
+            i,
+            array
+        );
+    }
+    
+    return accumulatedValue;
 }
 module.exports.reduce = reduce;
 
